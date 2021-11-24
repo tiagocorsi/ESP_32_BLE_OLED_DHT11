@@ -85,6 +85,12 @@ class MyCallbacks: public BLECharacteristicCallbacks {
 void setup() {
   Serial.begin(115200);
   Serial.println(F("DHTxx test!"));
+
+  // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
+  // init done
+  display.clearDisplay();
+  // text display tests
   
   pinMode(LED, OUTPUT);
  
@@ -120,18 +126,11 @@ void setup() {
   // Inicia a descoberta do ESP32
   pServer->getAdvertising()->start();
 
-  dht.begin();
-  
-  // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
-  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3C (for the 128x32)
-  // init done
-  
+  dht.begin();    
   Serial.println("Esperando um cliente se conectar...");
 }
  
 void loop() {
-  if (deviceConnected) {
- 
     float h = dht.readHumidity();
     float t = dht.readTemperature();
     // testa se retorno é valido, caso contrário algo está errado.
@@ -141,13 +140,15 @@ void loop() {
       return;
     }
     
+    /*
     Serial.print("Umidade: ");
     Serial.print(h);
     Serial.print(" %\t");
     Serial.print("Temperatura: ");
     Serial.print(t);
     Serial.println(" *C");     
-
+    */
+    
     display.clearDisplay();
     // text display tests
     
@@ -165,7 +166,7 @@ void loop() {
     //display.println(0xDEADBEEF, HEX);
     display.println(h);
 
-    display.setCursor(60,15);
+    display.setCursor(65,16);
     display.setTextSize(2);
     display.setTextColor(WHITE);
     //display.print("0x"); 
@@ -174,7 +175,8 @@ void loop() {
     
     display.display();
     display.clearDisplay();
-
+    
+  if (deviceConnected) {
     char dhtDataString[16];
     sprintf(dhtDataString, "%f,%f", t, h);
      

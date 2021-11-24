@@ -1,6 +1,11 @@
 Exemplo do OLED
 http://www.esp32learning.com/code/esp32-and-oled-display-example.php
 
+Exemplos para testar
+https://circuits4you.com/2019/01/09/esp32-oled-library-display-example/
+https://microcontrollerslab.com/oled-esp32-arduino-ide/
+
+
 Exemplo OLED com bilioteca u8glib
 https://www.filipeflop.com/blog/como-conectar-display-oled-arduino/
 https://create.arduino.cc/projecthub/muhammad-aqib/how-to-use-oled-display-with-arduino-arduino-oled-tutorial-233985
