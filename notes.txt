@@ -1,0 +1,15 @@
+Exemplo do OLED
+http://www.esp32learning.com/code/esp32-and-oled-display-example.php
+
+Exemplo OLED com bilioteca u8glib
+https://www.filipeflop.com/blog/como-conectar-display-oled-arduino/
+https://create.arduino.cc/projecthub/muhammad-aqib/how-to-use-oled-display-with-arduino-arduino-oled-tutorial-233985
+
+Wiki da biblioteca u8glib
+https://code.google.com/archive/p/u8glib/wikis/userreference.wiki
+
+Git da u8glib
+https://github.com/olikraus/u8glib
+
+Pinagem da ESP32
+https://capsistema.com.br/index.php/2020/03/22/referencia-de-pinagem-do-esp32-quais-pinos-do-gpio-voce-deve-usar/
