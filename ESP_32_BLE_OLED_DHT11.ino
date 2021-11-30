@@ -35,7 +35,9 @@ Adafruit_SSD1306 display(OLED_RESET);
 #define DHTTYPE DHT11 // define o tipo de sensor, no caso DHT11
  
 DHT dht(DHTPIN, DHTTYPE);
- 
+float humidity;
+float temperature;
+
 // Veja o link seguinte se quiser gerar seus próprios UUIDs:
 // https://www.uuidgenerator.net/
  
@@ -131,10 +133,10 @@ void setup() {
 }
  
 void loop() {
-    float h = dht.readHumidity();
-    float t = dht.readTemperature();
+    humidity = dht.readHumidity();
+    temperature = dht.readTemperature();
     // testa se retorno é valido, caso contrário algo está errado.
-    if (isnan(t) || isnan(h)) 
+    if (isnan(temperature) || isnan(humidity)) 
     {
       Serial.println("Failed to read from DHT");
       return;
@@ -155,7 +157,7 @@ void loop() {
     display.setTextSize(1);
     display.setTextColor(WHITE);
     display.setCursor(0,0);
-    display.println("FALA BROCA!");
+    display.println("SENSOR DHT11!");
     
     //display.setTextColor(BLACK, WHITE); // 'inverted' text
     //display.println(3.141592);
@@ -164,28 +166,41 @@ void loop() {
     display.setTextColor(WHITE);
     //display.print("0x"); 
     //display.println(0xDEADBEEF, HEX);
-    display.println(h);
+    display.println(humidity);
 
     display.setCursor(65,16);
     display.setTextSize(2);
     display.setTextColor(WHITE);
     //display.print("0x"); 
     //display.println(0xDEADBEEF, HEX);
-    display.println(t);
+    display.println(temperature);
     
     display.display();
     display.clearDisplay();
     
   if (deviceConnected) {
+    char humidityString[2];
+    char temperatureString[2];
+    dtostrf(humidity, 1, 2, humidityString);
+    //Serial.println("humidityString: ");
+    //Serial.print(humidityString);
+    
+    dtostrf(temperature, 1, 2, temperatureString);
+    //Serial.println("temperatureString: ");
+    //Serial.print(temperatureString);
+    
     char dhtDataString[16];
-    sprintf(dhtDataString, "%f,%f", t, h);
+    sprintf(dhtDataString, "%.2f,%.2f", humidity, temperature);
+    //Serial.println("dhtDataString: ");
+    //Serial.print(dhtDataString);
      
     pCharacteristic->setValue(dhtDataString);
-     
-    pCharacteristic->notify(); // Envia o valor para o aplicativo!
+
+    // Envia o valor para o aplicativo! 
+    pCharacteristic->notify(); 
     Serial.print("*** Dado enviado: ");
     Serial.print(dhtDataString);
-    Serial.println(" ***");
+    Serial.println(" ***"); 
   }
   delay(1000);
 }
